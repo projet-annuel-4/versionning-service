@@ -11,14 +11,12 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.util.List;
 
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/api/v1/project/{projectId}/branch")
 public class BranchController {
 
     private final BranchService branchService;
 
-    @Autowired
     public BranchController(BranchService branchService) {
         this.branchService = branchService;
     }
