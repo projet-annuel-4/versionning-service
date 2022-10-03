@@ -59,3 +59,6 @@ logging:
 
 target:
   file-service: ${TARGET_FILE_SERVICE}
+
+versioning:
+  dir-path: ${VERSIONING_DIR_PATH}
