@@ -1,8 +1,8 @@
 package com.example.versionningservice.controller;
 
 import com.example.versionningservice.domain.model.Project;
-import com.example.versionningservice.request.CreateProjectRequest;
-import com.example.versionningservice.request.UpdateProjectRequest;
+import com.example.versionningservice.dto.request.CreateProjectRequest;
+import com.example.versionningservice.dto.request.UpdateProjectRequest;
 import com.example.versionningservice.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

@@ -1,10 +1,13 @@
 package com.example.versionningservice.data.entity;
 
+import lombok.Builder;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
+@Builder
 @Table(name = "groups")
 public class GroupEntity {
 

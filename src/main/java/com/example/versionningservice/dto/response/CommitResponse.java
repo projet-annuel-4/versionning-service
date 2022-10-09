@@ -1,4 +1,4 @@
-package com.example.versionningservice.response;
+package com.example.versionningservice.dto.response;
 
 public class CommitResponse {
 

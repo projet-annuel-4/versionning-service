@@ -2,10 +2,10 @@ package com.example.versionningservice.service;
 
 import com.example.versionningservice.domain.model.Conflict;
 import com.example.versionningservice.domain.model.ProcessResponse;
-import com.example.versionningservice.request.CheckoutBranchRequest;
-import com.example.versionningservice.request.CreateBranchRequest;
-import com.example.versionningservice.request.DeleteBranchRequest;
-import com.example.versionningservice.request.MergeBranchRequest;
+import com.example.versionningservice.dto.request.CheckoutBranchRequest;
+import com.example.versionningservice.dto.request.CreateBranchRequest;
+import com.example.versionningservice.dto.request.DeleteBranchRequest;
+import com.example.versionningservice.dto.request.MergeBranchRequest;
 import com.example.versionningservice.utils.GitCommand;
 import org.springframework.stereotype.Service;
 

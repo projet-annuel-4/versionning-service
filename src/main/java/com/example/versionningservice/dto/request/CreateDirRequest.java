@@ -1,6 +1,6 @@
-package com.example.versionningservice.request;
+package com.example.versionningservice.dto.request;
 
-public class DeleteDirRequest {
+public class CreateDirRequest {
 
     private String dirNameUrl;
 

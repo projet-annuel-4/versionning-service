@@ -1,5 +1,6 @@
 package com.example.versionningservice.controller;
 
+import com.example.versionningservice.dto.request.*;
 import com.example.versionningservice.request.*;
 import com.example.versionningservice.service.FileService;
 import org.springframework.data.crossstore.ChangeSetPersister;
@@ -63,13 +64,13 @@ public class FileController {
     }
 
     @PostMapping("/gitAddFile")
-    public ResponseEntity<?> gitAddFile(@RequestBody AddFileRequest request,@PathVariable Long projectId) throws IOException {
+    public ResponseEntity<?> gitAddFile(@RequestBody AddFileRequest request, @PathVariable Long projectId) throws IOException {
         this.fileService.addFile(request, projectId);
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/gitRmFile")
-    public ResponseEntity<?> gitRmFile(@RequestBody RmFileRequest request,@PathVariable Long projectId) throws IOException {
+    public ResponseEntity<?> gitRmFile(@RequestBody RmFileRequest request, @PathVariable Long projectId) throws IOException {
         this.fileService.rmFile(request, projectId);
         return ResponseEntity.ok().build();
     }

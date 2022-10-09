@@ -2,9 +2,8 @@ package com.example.versionningservice.service;
 
 import com.example.versionningservice.domain.model.Commit;
 import com.example.versionningservice.domain.model.Conflict;
-import com.example.versionningservice.domain.model.ConflictType;
 import com.example.versionningservice.domain.model.ProcessResponse;
-import com.example.versionningservice.request.RevertCommitRequest;
+import com.example.versionningservice.dto.request.RevertCommitRequest;
 import com.example.versionningservice.utils.GitCommand;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package com.example.versionningservice.request;
+package com.example.versionningservice.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

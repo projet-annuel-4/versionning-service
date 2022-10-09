@@ -1,4 +1,4 @@
-package com.example.versionningservice.request;
+package com.example.versionningservice.dto.request;
 
 public class GetFileRequest {
 

@@ -2,10 +2,8 @@ package com.example.versionningservice.controller;
 
 import com.example.versionningservice.domain.model.Commit;
 import com.example.versionningservice.domain.model.Conflict;
-import com.example.versionningservice.domain.model.Project;
-import com.example.versionningservice.request.CommitRequest;
-import com.example.versionningservice.request.CreateProjectRequest;
-import com.example.versionningservice.request.RevertCommitRequest;
+import com.example.versionningservice.dto.request.CommitRequest;
+import com.example.versionningservice.dto.request.RevertCommitRequest;
 import com.example.versionningservice.service.CommitService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
