@@ -23,3 +23,4 @@ spring:
       use_sql_comments: false
       type: all
       disableConnectionTracking: true
+file-service: ${TARGET_FILE_SERVICE:host.docker.internal:9140}
