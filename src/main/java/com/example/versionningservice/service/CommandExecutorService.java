@@ -36,6 +36,7 @@ public class CommandExecutorService {
     public String createDir(String dirName, String path){
         String directoryPath = path + "/" + dirName;
         java.io.File dir = new java.io.File(directoryPath);
+        System.out.println("Dir name :  " + dirName + " - Dir path : " + path);
         if (!dir.mkdir()) {
             throw new RuntimeException("unable to create directory");
         }
