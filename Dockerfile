@@ -18,6 +18,8 @@ RUN mkdir -p target/dependency && (cd target/dependency; jar -xf /app.jar)
 #Same Java runtime
 FROM openjdk:11-slim
 
+RUN apt-get update
+RUN apt-get -y install git
 #Add volume pointing to /tmp
 VOLUME /tmp
 
