@@ -27,6 +27,5 @@ public final class GitCommand {
     public final static String CHECKOUT = "git -C \"%s\" checkout \"%s\"";
     public final static String LIST_BRANCHES = "git -C \"%s\" branch";
     public final static String LIST_FILES = "git -C \"%s\" ls-files";
-    @Value("${versioning.dir-path}")
-    public static String ACTIVE_DIR;
+
 }

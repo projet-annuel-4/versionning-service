@@ -4,6 +4,7 @@ import com.example.versionningservice.domain.model.ProcessResponse;
 import com.example.versionningservice.dto.request.*;
 import com.example.versionningservice.utils.GitCommand;
 import org.apache.tomcat.util.http.fileupload.FileUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,13 +21,14 @@ import java.util.List;
 public class FileService {
 
     private final CommandExecutorService commandExecutorService;
-
+    @Value("${versioning.dir-path}")
+    public static String activeDir;
     public FileService(CommandExecutorService commandExecutorService) {
         this.commandExecutorService = commandExecutorService;
     }
 
     public byte[] getFile(GetFileRequest fileNameUrl, Long projectId) throws IOException {
-        String filePath = GitCommand.ACTIVE_DIR + "/" + projectId + "/" + fileNameUrl;
+        String filePath = activeDir + "/" + projectId + "/" + fileNameUrl;
         byte[] bytes = Files.readAllBytes(Paths.get(filePath));
 
         return bytes;
@@ -39,15 +41,15 @@ public class FileService {
                     }
         String fileNameUrl = request.getFileNameUrl();
         System.out.println("ici : " +  fileNameUrl);
-        String filePath = GitCommand.ACTIVE_DIR + "/" + projectId + "/" + fileNameUrl;
+        String filePath = activeDir + "/" + projectId + "/" + fileNameUrl;
         System.out.println(filePath);
         Path newFilePath = Paths.get(filePath);
         Files.createFile(newFilePath);
-        commandExecutorService.execute(String.format(GitCommand.ADD, GitCommand.ACTIVE_DIR + "/" + projectId));
+        commandExecutorService.execute(String.format(GitCommand.ADD, activeDir + "/" + projectId));
     }
 
     public void saveFile(String request, Long projectId, MultipartFile file) throws IOException {
-        String filePath = GitCommand.ACTIVE_DIR + "/" + projectId + "/" + request;
+        String filePath = activeDir + "/" + projectId + "/" + request;
         try {
             FileWriter writer = new FileWriter(filePath, false);
             writer.write(new String(file.getBytes(), StandardCharsets.UTF_8));
@@ -55,11 +57,11 @@ public class FileService {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        commandExecutorService.execute(String.format(GitCommand.ADD, GitCommand.ACTIVE_DIR + "/" + projectId));
+        commandExecutorService.execute(String.format(GitCommand.ADD, activeDir + "/" + projectId));
     }
 
     public void createDirectory(CreateDirRequest request, Long projectId){
-        String directoryPath = GitCommand.ACTIVE_DIR + "/" + projectId + "/" + request.getDirNameUrl();
+        String directoryPath = activeDir + "/" + projectId + "/" + request.getDirNameUrl();
         java.io.File dir = new java.io.File(directoryPath);
         if (!dir.mkdir()) {
             throw new RuntimeException("unable to create directory");
@@ -67,7 +69,7 @@ public class FileService {
     }
 
     public void deleteFile(DeleteFileRequest request, Long projectId){
-        String directoryPath = GitCommand.ACTIVE_DIR + "/" + projectId + "/" + request.getFileNameUrl();
+        String directoryPath = activeDir + "/" + projectId + "/" + request.getFileNameUrl();
         File file = new File(directoryPath);
         if (!file.delete()) {
             System.out.println("File deleted successfully");
@@ -75,7 +77,7 @@ public class FileService {
     }
 
     public void deleteDirectory(DeleteDirRequest request, Long projectId) throws IOException {
-        String directoryPath = GitCommand.ACTIVE_DIR + "/" + projectId + "/" + request.getDirNameUrl();
+        String directoryPath = activeDir + "/" + projectId + "/" + request.getDirNameUrl();
         File dir = new File(directoryPath);
         FileUtils.deleteDirectory(dir);
         if (!dir.delete()) {
@@ -99,7 +101,7 @@ public class FileService {
     }
 
     private List<String> getAllFiles(Long projectId) throws IOException {
-        String projectPath = GitCommand.ACTIVE_DIR + "/" + projectId;
+        String projectPath = activeDir + "/" + projectId;
         ProcessResponse processResponse = commandExecutorService.execute(
                 String.format(GitCommand.LIST_FILES, projectPath)
         );
@@ -108,7 +110,7 @@ public class FileService {
     }
 
     public List<String> getTreeProject(Long projectId) throws IOException {
-        String projectPath = GitCommand.ACTIVE_DIR + "/" + projectId;
+        String projectPath = activeDir + "/" + projectId;
         ProcessResponse processResponse = commandExecutorService.execute(
                 String.format(GitCommand.LIST_FILES, projectPath)
         );
@@ -117,7 +119,7 @@ public class FileService {
     }
 
     public void addFile(AddFileRequest request, Long projectId) throws IOException {
-        String projectPath = GitCommand.ACTIVE_DIR + "/" + projectId;
+        String projectPath = activeDir + "/" + projectId;
         ProcessResponse processResponse = commandExecutorService.execute(
                 String.format(GitCommand.ADD_FILE, projectPath, request.getFileToAdd())
         );
@@ -126,7 +128,7 @@ public class FileService {
     }
 
     public void rmFile(RmFileRequest request, Long projectId) throws IOException {
-        String projectPath = GitCommand.ACTIVE_DIR + "/" + projectId;
+        String projectPath = activeDir + "/" + projectId;
         ProcessResponse processResponse = commandExecutorService.execute(
                 String.format(GitCommand.RM_FILE, projectPath, request.getFileToRm())
         );

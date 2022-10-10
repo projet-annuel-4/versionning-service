@@ -7,6 +7,7 @@ import com.example.versionningservice.dto.request.CreateBranchRequest;
 import com.example.versionningservice.dto.request.DeleteBranchRequest;
 import com.example.versionningservice.dto.request.MergeBranchRequest;
 import com.example.versionningservice.utils.GitCommand;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -20,7 +21,8 @@ public class BranchService {
     private final FileService fileService;
     private final CommitService commitService;
     private final ConflictService conflictService;
-
+    @Value("${versioning.dir-path}")
+    public static String activeDir;
     public BranchService(CommandExecutorService commandExecutorService, FileService fileService, CommitService commitService, ConflictService conflictService) {
         this.commandExecutorService = commandExecutorService;
         this.fileService = fileService;
@@ -29,14 +31,14 @@ public class BranchService {
     }
 
     public void createBranch(CreateBranchRequest branchName, Long projectId) throws IOException {
-        String projectPath = GitCommand.ACTIVE_DIR + "/" + projectId;
+        String projectPath = activeDir + "/" + projectId;
         ProcessResponse processResponse = commandExecutorService.execute(String.format(GitCommand.CREATE_BRANCH, projectPath ,branchName.getBranchName()));
         System.out.println("exit code : " + processResponse.exitCode);
         //TODO
     }
 
     public String getActualBranch(Long projectId) throws IOException {
-        String projectPath = GitCommand.ACTIVE_DIR + "/" + projectId;
+        String projectPath = activeDir + "/" + projectId;
         ProcessResponse processResponse = commandExecutorService.execute(
                 String.format(GitCommand.ACTUAL_BRANCH, projectPath)
         );
@@ -45,7 +47,7 @@ public class BranchService {
 
     public List<String> getAllBranches(Long projectId) throws IOException {
         ProcessResponse processResponse = commandExecutorService.execute(
-                String.format(GitCommand.LIST_BRANCHES, GitCommand.ACTIVE_DIR + "/" + projectId)
+                String.format(GitCommand.LIST_BRANCHES, activeDir + "/" + projectId)
         );
         for( int i = 0; i < processResponse.outputs.size(); i++){
             processResponse.outputs.set(i, processResponse.outputs.get(i).replace("*", "").trim());
@@ -57,14 +59,14 @@ public class BranchService {
     }
 
     public void checkoutBranch(CheckoutBranchRequest branchName, Long projectId) throws IOException {
-        String projectPath = GitCommand.ACTIVE_DIR + "/" + projectId;
+        String projectPath = activeDir + "/" + projectId;
         ProcessResponse processResponse = commandExecutorService.execute(
                 String.format(GitCommand.CHECKOUT, projectPath, branchName.getTargetBranch())
         );
     }
 
     public List<Conflict> mergeBranch(MergeBranchRequest request, Long projectId) throws IOException {
-        String projectPath = GitCommand.ACTIVE_DIR + "/" + projectId;
+        String projectPath = activeDir + "/" + projectId;
         ProcessResponse processResponse = commandExecutorService.execute(
                 String.format(GitCommand.MERGE, projectPath, request.getBranchToMerge())
         );
@@ -82,7 +84,7 @@ public class BranchService {
     }
 
     public List<Conflict> mergeBranchContinue(MergeBranchRequest branchToMerge, Long projectId) throws IOException {
-        String projectPath = GitCommand.ACTIVE_DIR + "/" + projectId;
+        String projectPath = activeDir + "/" + projectId;
         ProcessResponse processResponse = commandExecutorService.execute(
                 String.format(GitCommand.STATUS, projectPath)
         );
@@ -98,7 +100,7 @@ public class BranchService {
     }
 
     public void mergeBranchAbort(Long projectId) throws IOException {
-        String projectPath = GitCommand.ACTIVE_DIR + "/" + projectId;
+        String projectPath = activeDir + "/" + projectId;
         ProcessResponse processResponse = commandExecutorService.execute(
                 String.format(GitCommand.MERGE_ABORT, projectPath)
         );
@@ -106,7 +108,7 @@ public class BranchService {
     }
 
     public void deleteBranch(DeleteBranchRequest branchToDelete, Long projectId) throws IOException {
-        String projectPath = GitCommand.ACTIVE_DIR + "/" + projectId;
+        String projectPath = activeDir + "/" + projectId;
         ProcessResponse processResponse = commandExecutorService.execute(
                 String.format(GitCommand.DELETE_BRANCH, projectPath, branchToDelete.getBranchToDelete())
         );

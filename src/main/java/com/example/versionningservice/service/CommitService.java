@@ -5,6 +5,7 @@ import com.example.versionningservice.domain.model.Conflict;
 import com.example.versionningservice.domain.model.ProcessResponse;
 import com.example.versionningservice.dto.request.RevertCommitRequest;
 import com.example.versionningservice.utils.GitCommand;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +20,8 @@ public class CommitService {
     private final BranchService branchService;
     private final FileService fileService;
     private final ConflictService conflictService;
-
+    @Value("${versioning.dir-path}")
+    public static String activeDir;
     public CommitService(CommandExecutorService commandExecutorService, @Lazy BranchService branchService, FileService fileService, ConflictService conflictService) {
         this.commandExecutorService = commandExecutorService;
         this.branchService = branchService;
@@ -28,7 +30,7 @@ public class CommitService {
     }
 
     public void commit(String commitName, Long projectId) throws IOException {
-        String projectPath = GitCommand.ACTIVE_DIR + "/" + projectId;
+        String projectPath = activeDir + "/" + projectId;
         ProcessResponse processResponse = commandExecutorService.execute(
                 String.format(GitCommand.COMMIT, projectPath, commitName)
         );
@@ -37,7 +39,7 @@ public class CommitService {
 
     public List<Commit> getAllCommit(Long projectId) throws IOException {
         String actualBranch = branchService.getActualBranch(projectId);
-        String projectPath = GitCommand.ACTIVE_DIR + "/" + projectId;
+        String projectPath = activeDir + "/" + projectId;
         ProcessResponse processResponse = commandExecutorService.execute(
                 String.format(GitCommand.LIST_COMMIT, projectPath) + GitCommand.LIST_COMMIT_FORMAT + actualBranch
         );
@@ -45,7 +47,7 @@ public class CommitService {
     }
 
     public List<Conflict> revertCommit(RevertCommitRequest request, Long projectId) throws IOException {
-        String projectPath = GitCommand.ACTIVE_DIR + "/" + projectId;
+        String projectPath = activeDir + "/" + projectId;
         ProcessResponse processResponse = commandExecutorService.execute(
                 String.format(GitCommand.REVERT_COMMIT, projectPath, request.getCommitToRevert())
         );
@@ -65,7 +67,7 @@ public class CommitService {
 
 
     public List<Conflict> revertCommitContinue(Long projectId, RevertCommitRequest request) throws IOException {
-        String projectPath = GitCommand.ACTIVE_DIR + "/" + projectId;
+        String projectPath = activeDir + "/" + projectId;
         ProcessResponse processResponse = commandExecutorService.execute(
                 String.format(GitCommand.STATUS, projectPath)
         );
@@ -80,7 +82,7 @@ public class CommitService {
     }
 
     public void revertCommitAbort(Long projectId) throws IOException {
-        String projectPath = GitCommand.ACTIVE_DIR + "/" + projectId;
+        String projectPath = activeDir + "/" + projectId;
         ProcessResponse processResponse = commandExecutorService.execute(
                 String.format(GitCommand.REVERT_COMMIT_ABORT, projectPath)
         );

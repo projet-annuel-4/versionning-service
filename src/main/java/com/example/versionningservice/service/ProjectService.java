@@ -8,6 +8,7 @@ import com.example.versionningservice.dto.request.CreateProjectRequest;
 import com.example.versionningservice.dto.request.UpdateProjectRequest;
 import com.example.versionningservice.utils.GitCommand;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,7 +27,8 @@ public class ProjectService {
     //    private final CreatedProjectProducer createdProjectProducer;
 //    private final DeletedProjectProducer deletedProjectProducer;
     private final GroupService groupService;
-
+    @Value("${versioning.dir-path}")
+    public static String activeDir;
     @Autowired
     public ProjectService(ProjectRepository projectRepository, ProjectDomainMapper projectDomainMapper, CommandExecutorService commandExecutorService, GroupService groupService) {
         this.projectRepository = projectRepository;
@@ -37,7 +39,7 @@ public class ProjectService {
 
     public Project createProject(CreateProjectRequest request) throws IOException {
         Project project = saveProject(request);
-        String dirCreatedPath = commandExecutorService.createDir(project.getId().toString(), GitCommand.ACTIVE_DIR);
+        String dirCreatedPath = commandExecutorService.createDir(project.getId().toString(), activeDir);
         commandExecutorService.execute(String.format(GitCommand.INIT, dirCreatedPath));
         return project;
 
