@@ -24,3 +24,5 @@ spring:
       type: all
       disableConnectionTracking: true
 file-service: ${TARGET_FILE_SERVICE:host.docker.internal:9140}
+versioning:
+  dir-path: ${VERSIONING_DIR_PATH:/data}
