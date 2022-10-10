@@ -21,7 +21,7 @@ public class CommitService {
     private final FileService fileService;
     private final ConflictService conflictService;
     @Value("${versioning.dir-path}")
-    public static String activeDir;
+    public String activeDir;
     public CommitService(CommandExecutorService commandExecutorService, @Lazy BranchService branchService, FileService fileService, ConflictService conflictService) {
         this.commandExecutorService = commandExecutorService;
         this.branchService = branchService;

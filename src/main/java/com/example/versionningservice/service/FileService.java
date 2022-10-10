@@ -22,7 +22,7 @@ public class FileService {
 
     private final CommandExecutorService commandExecutorService;
     @Value("${versioning.dir-path}")
-    public static String activeDir;
+    public String activeDir;
     public FileService(CommandExecutorService commandExecutorService) {
         this.commandExecutorService = commandExecutorService;
     }

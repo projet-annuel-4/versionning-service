@@ -22,7 +22,7 @@ public class BranchService {
     private final CommitService commitService;
     private final ConflictService conflictService;
     @Value("${versioning.dir-path}")
-    public static String activeDir;
+    public String activeDir;
     public BranchService(CommandExecutorService commandExecutorService, FileService fileService, CommitService commitService, ConflictService conflictService) {
         this.commandExecutorService = commandExecutorService;
         this.fileService = fileService;

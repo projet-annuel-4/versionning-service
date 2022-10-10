@@ -28,7 +28,7 @@ public class ProjectService {
 //    private final DeletedProjectProducer deletedProjectProducer;
     private final GroupService groupService;
     @Value("${versioning.dir-path}")
-    public static String activeDir;
+    public String activeDir;
     @Autowired
     public ProjectService(ProjectRepository projectRepository, ProjectDomainMapper projectDomainMapper, CommandExecutorService commandExecutorService, GroupService groupService) {
         this.projectRepository = projectRepository;
