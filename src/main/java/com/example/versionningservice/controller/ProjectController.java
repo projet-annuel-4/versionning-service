@@ -13,7 +13,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/api/v1/project")
+@RequestMapping("/api/v2/project")
 public class ProjectController {
 
     private final ProjectService projectService;

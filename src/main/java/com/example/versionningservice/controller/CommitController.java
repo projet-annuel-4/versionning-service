@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/project/{projectId}/commit")
+@RequestMapping("/api/v2/project/{projectId}/commit")
 public class CommitController {
 
     private final CommitService commitService;

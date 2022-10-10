@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/project/{projectId}/branch")
+@RequestMapping("/api/v2/project/{projectId}/branch")
 public class BranchController {
 
     private final BranchService branchService;
