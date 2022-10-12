@@ -1,5 +1,7 @@
 package com.example.versionningservice.utils;
 
+import org.springframework.beans.factory.annotation.Value;
+
 public final class GitCommand {
 
     public final static String INIT = "git init \"%s\"";
@@ -26,5 +28,7 @@ public final class GitCommand {
     public final static String LIST_BRANCHES = "git -C \"%s\" branch";
     public final static String LIST_FILES = "git -C \"%s\" ls-files";
 
-    public final static String ACTIVE_DIR = "C:\\Users\\LILOKE\\Desktop\\PC_save_1\\4eme_AL\\Projet Annuel\\versionning";
+    //  public final static String ACTIVE_DIR = "C:\\Users\\LILOKE\\Desktop\\PC_save_1\\4eme_AL\\Projet Annuel\\versionning";
+    @Value("${versioning.dir-path}")
+    public static String ACTIVE_DIR;
 }

@@ -26,7 +26,8 @@ public class FileService {
     }
 
     public byte[] getFile(GetFileRequest fileNameUrl, Long projectId) throws IOException {
-        String filePath = GitCommand.ACTIVE_DIR + "/" + projectId + "/" + fileNameUrl;
+        String filePath = GitCommand.ACTIVE_DIR + "/" + projectId + "/" + fileNameUrl.getFileNameUrl();
+        System.out.println("get file : " + filePath);
         byte[] bytes = Files.readAllBytes(Paths.get(filePath));
 
         return bytes;

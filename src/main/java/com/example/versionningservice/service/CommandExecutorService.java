@@ -1,6 +1,7 @@
 package com.example.versionningservice.service;
 
 import com.example.versionningservice.domain.model.ProcessResponse;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -12,7 +13,8 @@ import java.util.Map;
 
 @Service
 public class CommandExecutorService {
-
+    @Value("${versioning.dir-path}")
+    public  String activeDir;
     public CommandExecutorService() {
     }
 
@@ -34,7 +36,8 @@ public class CommandExecutorService {
     }
 
     public String createDir(String dirName, String path){
-        String directoryPath = path + "/" + dirName;
+        String directoryPath = activeDir + "/" + dirName;
+        System.out.println(directoryPath);
         java.io.File dir = new java.io.File(directoryPath);
         if (!dir.mkdir()) {
             throw new RuntimeException("unable to create directory");
