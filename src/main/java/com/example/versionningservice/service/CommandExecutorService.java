@@ -29,7 +29,7 @@ public class CommandExecutorService {
         response.outputs = getOutputs(process);
         response.errors = getErrors(process);
         response.exitCode = process.exitValue();
-
+        process.destroy();
         return response;
     }
 
