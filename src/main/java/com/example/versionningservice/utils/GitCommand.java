@@ -4,19 +4,19 @@ import org.springframework.beans.factory.annotation.Value;
 
 public final class GitCommand {
 
-    public final static String INIT = "git -C \"%s\" init";
-    public final static String ADD = "git -C \"%s\" add .";
-    public final static String ADD_FILE = "git -C \"%s\" add \"%s\"";
-    public final static String RM_FILE = "git -C \"%s\" rm \"%s\"";
-    public final static String STATUS = "git -C \"%s\" status";
+    public final static String INIT = "git -C %s init";
+    public final static String ADD = "git -C %s add .";
+    public final static String ADD_FILE = "git -C %s add \"%s\"";
+    public final static String RM_FILE = "git -C %s rm %s";
+    public final static String STATUS = "git -C %s status";
 
 
-    public final static String COMMIT = "git -C \"%s\" commit -m \"%s\"";
-    public final static String LIST_COMMIT = "git -C \"%s\" log ";
+    public final static String COMMIT = "git -C %s commit -m \"%s\"";
+    public final static String LIST_COMMIT = "git -C %s log ";
     public final static String LIST_COMMIT_FORMAT = "--format=\"%C(auto) %h %s\" ";
-    public final static String REVERT_COMMIT = "git -C \"%s\" revert --no-commit %s";
-    public final static String REVERT_COMMIT_CONTINUE = "git -C \"%s\" revert --continue --no-commit";
-    public final static String REVERT_COMMIT_ABORT = "git -C \"%s\" revert --abort";
+    public final static String REVERT_COMMIT = "git -C %s revert --no-commit %s";
+    public final static String REVERT_COMMIT_CONTINUE = "git -C %s revert --continue --no-commit";
+    public final static String REVERT_COMMIT_ABORT = "git -C %s revert --abort";
 
     public final static String MERGE = "git -C \"%s\" merge --no-commit \"%s\"";
     public final static String MERGE_ABORT = "git -C \"%s\" merge --abort";
