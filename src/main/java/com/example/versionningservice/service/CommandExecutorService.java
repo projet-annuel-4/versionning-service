@@ -34,6 +34,7 @@ public class CommandExecutorService {
         ProcessResponse response = new ProcessResponse();
         Map<String, ArrayList<String>> result = new HashMap<>();
         response.outputs = getOutputs(process);
+        System.out.println("HAITHEM SIZE : " + response.outputs.size());
         response.errors = getErrors(process);
         response.exitCode = process.exitValue();
         process.destroy();
@@ -56,6 +57,7 @@ public class CommandExecutorService {
         ArrayList<String> outputs = new ArrayList<>();
         String outputLine;
         while ( (outputLine = output.readLine()) != null){
+            System.out.println("HAITHEM : " + outputLine);
             outputs.add(outputLine);
         }
         return outputs;
@@ -66,8 +68,7 @@ public class CommandExecutorService {
         ArrayList<String> errors = new ArrayList<>();
         String errorLine ;
         while ( (errorLine = error.readLine()) != null){
-            System.out.println( "123" );
-            System.out.println(errorLine + " ///// " );
+            System.out.println("HAITHEM error : " + errorLine);
             errors.add(errorLine);
         }
 

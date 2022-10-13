@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 
 public final class GitCommand {
 
-    public final static String INIT = "git init \"%s\"";
+    public final static String INIT = "git -C \"%s\" init";
     public final static String ADD = "git -C \"%s\" add .";
     public final static String ADD_FILE = "git -C \"%s\" add \"%s\"";
     public final static String RM_FILE = "git -C \"%s\" rm \"%s\"";
