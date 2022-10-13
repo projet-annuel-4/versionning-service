@@ -27,6 +27,7 @@ public class ProjectController {
     @PostMapping("/createProject")
     public ResponseEntity<Project> createProject(@RequestBody CreateProjectRequest request) throws IOException {
         Project projectCreated = projectService.createProject(request);
+        // bloquer la duplication
         return ResponseEntity.ok(projectCreated);
     }
 

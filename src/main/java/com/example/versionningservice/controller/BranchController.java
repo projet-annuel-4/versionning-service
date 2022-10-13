@@ -30,9 +30,9 @@ public class BranchController {
     }
 
     @GetMapping("/getActualBranch")
-    public ResponseEntity<?> getActualBranch(@PathVariable("projectId") Long projectId) throws IOException {
-        this.branchService.getActualBranch(projectId);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<String> getActualBranch(@PathVariable("projectId") Long projectId) throws IOException {
+        String actualBranch = this.branchService.getActualBranch(projectId);
+        return ResponseEntity.ok(actualBranch);
     }
 
     @PostMapping("/checkout")
