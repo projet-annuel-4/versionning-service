@@ -114,7 +114,7 @@ public class FileService {
         ProcessResponse processResponse = commandExecutorService.execute(
                 String.format(GitCommand.LIST_FILES, projectPath)
         );
-
+        System.out.println(processResponse);
         return processResponse.outputs;
     }
 

@@ -40,4 +40,13 @@ public class ProcessResponse {
     public void setExitCode(int exitCode) {
         this.exitCode = exitCode;
     }
+
+    @Override
+    public String toString() {
+        return "ProcessResponse{" +
+                "outputs=" + outputs +
+                ", errors=" + errors +
+                ", exitCode=" + exitCode +
+                '}';
+    }
 }

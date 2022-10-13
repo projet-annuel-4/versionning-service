@@ -34,7 +34,7 @@ public class FileController {
     }
 
     @GetMapping("/getTree")
-    public ResponseEntity<List> getTreeProject(@PathVariable Long projectId) throws IOException {
+    public ResponseEntity<List<String>> getTreeProject(@PathVariable Long projectId) throws IOException {
         return ResponseEntity.ok(fileService.getTreeProject(projectId));
     }
 
