@@ -17,10 +17,15 @@ public class CommandExecutorService {
     }
 
     public ProcessResponse execute(String command) throws IOException {
-        System.out.println("J'execute : " + command);
-        Process process;
-        process = Runtime.getRuntime().exec( command );
-        return getProcessResult(process);
+        try{
+            System.out.println("J'execute : " + command);
+            Process process;
+            process = Runtime.getRuntime().exec( command );
+            process.waitFor();
+            return getProcessResult(process);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private ProcessResponse getProcessResult(Process process) throws IOException {
