@@ -6,6 +6,7 @@ import com.example.versionningservice.dto.request.CheckoutBranchRequest;
 import com.example.versionningservice.dto.request.CreateBranchRequest;
 import com.example.versionningservice.dto.request.DeleteBranchRequest;
 import com.example.versionningservice.dto.request.MergeBranchRequest;
+import com.example.versionningservice.dto.response.BranchResponse;
 import com.example.versionningservice.service.BranchService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,9 +31,9 @@ public class BranchController {
     }
 
     @GetMapping("/getActualBranch")
-    public ResponseEntity<String> getActualBranch(@PathVariable("projectId") Long projectId) throws IOException {
+    public ResponseEntity<BranchResponse> getActualBranch(@PathVariable("projectId") Long projectId) throws IOException {
         String actualBranch = this.branchService.getActualBranch(projectId);
-        return ResponseEntity.ok(actualBranch);
+        return ResponseEntity.ok(new BranchResponse(actualBranch));
     }
 
     @PostMapping("/checkout")
