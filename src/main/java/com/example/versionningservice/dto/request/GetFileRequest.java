@@ -4,7 +4,11 @@ public class GetFileRequest {
 
         private String fileNameUrl;
 
-        public String getFileNameUrl() {
+    public GetFileRequest(String fileURL) {
+        this.fileNameUrl =  fileURL;
+    }
+
+    public String getFileNameUrl() {
             return fileNameUrl;
         }
 

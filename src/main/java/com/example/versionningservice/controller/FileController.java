@@ -28,9 +28,9 @@ public class FileController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/getFileData")
-    public ResponseEntity<byte[]> getFile(@PathVariable Long projectId, @RequestBody GetFileRequest fileNameUrl) throws ChangeSetPersister.NotFoundException, IOException, URISyntaxException, InterruptedException {
-        return ResponseEntity.ok(fileService.getFile(fileNameUrl, projectId));
+    @GetMapping("/getFileData/{fileURL}")
+    public ResponseEntity<byte[]> getFile(@PathVariable Long projectId, @RequestParam String fileURL) throws ChangeSetPersister.NotFoundException, IOException, URISyntaxException, InterruptedException {
+        return ResponseEntity.ok(fileService.getFile(new GetFileRequest(fileURL), projectId));
     }
 
     @GetMapping("/getTree")
