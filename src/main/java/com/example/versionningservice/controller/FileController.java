@@ -28,7 +28,7 @@ public class FileController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/getFileData/{fileNameUrl}")
+    @GetMapping("/getFileData")
     public ResponseEntity<byte[]> getFile(@PathVariable Long projectId, @RequestParam("fileNameUrl") String fileNameUrl) throws ChangeSetPersister.NotFoundException, IOException, URISyntaxException, InterruptedException {
         return ResponseEntity.ok(fileService.getFile(new GetFileRequest(fileNameUrl), projectId));
     }
