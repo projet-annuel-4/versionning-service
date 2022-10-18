@@ -28,7 +28,7 @@ public class FileService {
     }
 
     public byte[] getFile(GetFileRequest fileNameUrl, Long projectId) throws IOException {
-        String filePath = activeDir + "/" + projectId + "/" + fileNameUrl;
+        String filePath = activeDir + "/" + projectId + "/" + fileNameUrl.getFileNameUrl();
         byte[] bytes = Files.readAllBytes(Paths.get(filePath));
 
         return bytes;
