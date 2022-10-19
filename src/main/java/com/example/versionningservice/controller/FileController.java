@@ -51,7 +51,7 @@ public class FileController {
     }
 
     @DeleteMapping("/deleteFile")
-    public ResponseEntity<?> deleteFile(@PathVariable Long projectId, @RequestBody DeleteFileRequest fileNameUrl){
+    public ResponseEntity<?> deleteFile(@PathVariable Long projectId, @RequestBody DeleteFileRequest fileNameUrl) throws IOException {
         this.fileService.deleteFile(fileNameUrl, projectId);
         return ResponseEntity.ok().build();
     }

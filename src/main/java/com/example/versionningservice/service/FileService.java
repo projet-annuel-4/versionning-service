@@ -68,12 +68,13 @@ public class FileService {
         }
     }
 
-    public void deleteFile(DeleteFileRequest request, Long projectId){
+    public void deleteFile(DeleteFileRequest request, Long projectId) throws IOException {
         String directoryPath = activeDir + "/" + projectId + "/" + request.getFileNameUrl();
         File file = new File(directoryPath);
         if (!file.delete()) {
             System.out.println("File deleted successfully");
         }
+        commandExecutorService.execute(String.format(GitCommand.ADD, activeDir + "/" + projectId));
     }
 
     public void deleteDirectory(DeleteDirRequest request, Long projectId) throws IOException {
