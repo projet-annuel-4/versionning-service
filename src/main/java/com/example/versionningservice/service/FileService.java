@@ -68,8 +68,8 @@ public class FileService {
         }
     }
 
-    public void deleteFile(DeleteFileRequest request, Long projectId) throws IOException {
-        String directoryPath = activeDir + "/" + projectId + "/" + request.getFileNameUrl();
+    public void deleteFile(String fileNameUrl, Long projectId) throws IOException {
+        String directoryPath = activeDir + "/" + projectId + "/" + fileNameUrl;
         File file = new File(directoryPath);
         if (!file.delete()) {
             System.out.println("File deleted successfully");
