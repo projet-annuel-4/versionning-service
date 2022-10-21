@@ -44,6 +44,7 @@ public class FileService {
         String filePath = activeDir + "/" + projectId + "/" + fileNameUrl;
         System.out.println(filePath);
         Path newFilePath = Paths.get(filePath);
+        Files.createDirectories(newFilePath.toAbsolutePath());
         Files.createFile(newFilePath);
         commandExecutorService.execute(String.format(GitCommand.ADD, activeDir + "/" + projectId));
     }
