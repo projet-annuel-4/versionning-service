@@ -41,6 +41,7 @@ public class ProjectService {
         Project project = saveProject(request);
         String dirCreatedPath = commandExecutorService.createDir(project.getId().toString(), activeDir);
         commandExecutorService.execute(String.format(GitCommand.INIT, dirCreatedPath));
+        commandExecutorService.execute(String.format(GitCommand.COMMIT, dirCreatedPath,"Init project"));
         return project;
 
     }
