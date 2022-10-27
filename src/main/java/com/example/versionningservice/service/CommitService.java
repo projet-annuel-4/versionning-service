@@ -45,7 +45,7 @@ public class CommitService {
         String actualBranch = branchService.getActualBranch(projectId);
         String projectPath = activeDir + "/" + projectId;
         ProcessResponse processResponse = commandExecutorService.execute(
-                String.format(GitCommand.LIST_COMMIT, projectPath) + GitCommand.LIST_COMMIT_FORMAT
+                String.format(GitCommand.LIST_COMMIT, projectPath) //+ GitCommand.LIST_COMMIT_FORMAT
         );
         return commitParser(processResponse.outputs);
     }
