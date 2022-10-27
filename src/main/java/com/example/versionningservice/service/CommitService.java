@@ -10,6 +10,8 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +43,7 @@ public class CommitService {
         String actualBranch = branchService.getActualBranch(projectId);
         String projectPath = activeDir + "/" + projectId;
         ProcessResponse processResponse = commandExecutorService.execute(
-                String.format(GitCommand.LIST_COMMIT, projectPath) + GitCommand.LIST_COMMIT_FORMAT + actualBranch
+                String.format(GitCommand.LIST_COMMIT, projectPath) + GitCommand.LIST_COMMIT_FORMAT
         );
         return commitParser(processResponse.outputs);
     }
@@ -94,8 +96,10 @@ public class CommitService {
     private List<Commit> commitParser(List<String> commitToParse){
         List<Commit> commits = new ArrayList<>();
         for(String toParse : commitToParse){
-            String[] split = toParse.trim().split(" ", 2);
-            Commit newCommit = new Commit(split[0], split[1]);
+            String[] split = toParse.trim().split("|", 3);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            LocalDateTime dateTime = LocalDateTime.parse(split[2], formatter);
+            Commit newCommit = new Commit(split[0], split[1], dateTime);
             commits.add(newCommit);
         }
         return commits;

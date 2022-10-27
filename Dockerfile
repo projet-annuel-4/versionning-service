@@ -28,6 +28,7 @@ ARG DEPENDENCY=/target/dependency
 COPY --from=build ${DEPENDENCY}/BOOT-INF/lib /app/lib
 COPY --from=build ${DEPENDENCY}/META-INF /app/META-INF
 COPY --from=build ${DEPENDENCY}/BOOT-INF/classes /app
-
+RUN git config --global user.name "social-code" && \
+    git config --global user.email "app@social-code.fr"
 #execute the application
 ENTRYPOINT ["java","-cp","app:app/lib/*","com/example/versionningservice/VersionningServiceApplication"]
