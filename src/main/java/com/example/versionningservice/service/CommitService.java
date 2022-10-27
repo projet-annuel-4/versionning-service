@@ -10,10 +10,12 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimeZone;
 
 @Service
 public class CommitService {
@@ -97,9 +99,9 @@ public class CommitService {
         List<Commit> commits = new ArrayList<>();
         for(String toParse : commitToParse){
             String[] split = toParse.trim().split("|", 3);
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-            LocalDateTime dateTime = LocalDateTime.parse(split[2], formatter);
-            Commit newCommit = new Commit(split[0], split[1], dateTime);
+            Timestamp timestamp =  new Timestamp(Long.valueOf(split[2]));
+            LocalDateTime localDateTime = timestamp.toLocalDateTime();
+            Commit newCommit = new Commit(split[0], split[1], localDateTime);
             commits.add(newCommit);
         }
         return commits;
