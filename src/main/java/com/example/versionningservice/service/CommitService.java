@@ -44,9 +44,13 @@ public class CommitService {
     public List<Commit> getAllCommit(Long projectId) throws IOException {
         String actualBranch = branchService.getActualBranch(projectId);
         String projectPath = activeDir + "/" + projectId;
-        ProcessResponse processResponse = commandExecutorService.execute(
+        /*ProcessResponse processResponse = commandExecutorService.execute(
                 String.format(GitCommand.LIST_COMMIT, projectPath) + GitCommand.LIST_COMMIT_FORMAT
+        );*/
+        ProcessResponse processResponse = commandExecutorService.execute(
+                String.format("cd %s && gitlogs | cat", projectPath)
         );
+
         return commitParser(processResponse.outputs);
     }
 
