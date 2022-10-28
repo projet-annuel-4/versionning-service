@@ -5,21 +5,28 @@ import com.example.versionningservice.domain.model.Conflict;
 import com.example.versionningservice.domain.model.ProcessResponse;
 import com.example.versionningservice.dto.request.RevertCommitRequest;
 import com.example.versionningservice.utils.GitCommand;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.Type;
+import java.nio.file.Path;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.TimeZone;
+import java.util.UUID;
 
 @Service
 public class CommitService {
-
+    private static final Type REVIEW_TYPE = new TypeToken<List<Commit>>() {
+    }.getType();
     private final CommandExecutorService commandExecutorService;
     private final BranchService branchService;
     private final FileService fileService;
@@ -42,16 +49,22 @@ public class CommitService {
     }
 
     public List<Commit> getAllCommit(Long projectId) throws IOException {
-        String actualBranch = branchService.getActualBranch(projectId);
+        String uuid = UUID.randomUUID().toString();
         String projectPath = activeDir + "/" + projectId;
-        /*ProcessResponse processResponse = commandExecutorService.execute(
-                String.format(GitCommand.LIST_COMMIT, projectPath) + GitCommand.LIST_COMMIT_FORMAT
-        );*/
-        ProcessResponse processResponse = commandExecutorService.execute(
-                "gitlogs | cat", projectPath
+         commandExecutorService.execute(
+                 String.format(GitCommand.LIST_COMMIT, projectPath ,uuid)
         );
+         var filePath = Path.of(String.format("/tmp/%s.json", uuid));
+        System.out.println("uuid: " + uuid);
+        return parseObjectCommitFile(filePath);
+    }
 
-        return commitParser(processResponse.outputs);
+    private List<Commit> parseObjectCommitFile(Path filePath) throws FileNotFoundException {
+        Gson gson = new Gson();
+        JsonReader reader = new JsonReader(new FileReader(filePath.toFile()));
+        List<Commit> commitList = gson.fromJson(reader, REVIEW_TYPE);
+        System.out.println("commitList: " + commitList);
+        return commitList;
     }
 
     public List<Conflict> revertCommit(RevertCommitRequest request, Long projectId) throws IOException {
@@ -72,8 +85,6 @@ public class CommitService {
         );
         return conflictService.conflictsStringToModel(conflictService.getConflict(processResponse.outputs));
     }
-
-
 
     public List<Conflict> revertCommitContinue(Long projectId, RevertCommitRequest request) throws IOException {
         String projectPath = activeDir + "/" + projectId;
@@ -99,7 +110,7 @@ public class CommitService {
         // if exit code = 1 => conflict
     }
 
-    private List<Commit> commitParser(List<String> commitToParse){
+/*    private List<Commit> commitParser(List<String> commitToParse){
         List<Commit> commits = new ArrayList<>();
         for(String toParse : commitToParse){
             String[] split = toParse.trim().split("|", 3);
@@ -109,7 +120,7 @@ public class CommitService {
             commits.add(newCommit);
         }
         return commits;
-    }
+    }*/
 
 
 }

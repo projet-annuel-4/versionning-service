@@ -6,19 +6,19 @@ public class Commit {
 
     private String code;
     private String name;
-    private LocalDateTime date;
+    private String date;
 
-    public Commit(String code, String name,LocalDateTime date) {
+    public Commit(String code, String name,String date) {
         this.code = code;
         this.name = name;
         this.date = date;
     }
 
-    public LocalDateTime getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(LocalDateTime date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
@@ -36,5 +36,14 @@ public class Commit {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Commit{" +
+                "code='" + code + '\'' +
+                ", name='" + name + '\'' +
+                ", date=" + date +
+                '}';
     }
 }

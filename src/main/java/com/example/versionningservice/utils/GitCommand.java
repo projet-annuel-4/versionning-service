@@ -12,7 +12,7 @@ public final class GitCommand {
 
 
     public final static String COMMIT = "git -C %s commit -m \"%s\"";
-    public final static String LIST_COMMIT = "git -C %s log ";
+    public final static String LIST_COMMIT = "gitlogs %s /tmp/%s.json";
     public final static String LIST_COMMIT_FORMAT = " --format='%C(auto) %h|%s|%ci'";
     public final static String REVERT_COMMIT = "git -C %s revert --no-commit %s";
     public final static String REVERT_COMMIT_CONTINUE = "git -C %s revert --continue --no-commit";
