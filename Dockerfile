@@ -10,8 +10,8 @@ LABEL maintainer="HLimam <heithem.limame@gmail.com>"
 
 # Add the application's jar to the container
 COPY target/*.jar app.jar
-COPY gitlogs /bin/gitlogs
-RUN chmod +x /bin/gitlogs
+ADD gitlogs /bin/getlogs
+RUN chmod +x /bin/getlogs
 #unpackage jar file
 RUN mkdir -p target/dependency && (cd target/dependency; jar -xf /app.jar)
 
@@ -29,9 +29,10 @@ ARG DEPENDENCY=/target/dependency
 COPY --from=build ${DEPENDENCY}/BOOT-INF/lib /app/lib
 COPY --from=build ${DEPENDENCY}/META-INF /app/META-INF
 COPY --from=build ${DEPENDENCY}/BOOT-INF/classes /app
+COPY /bin/getlogs /bin/getlogs
 
 RUN git config --global user.name "social-code" && \
     git config --global user.email "app@social-code.fr" && \
-    alias gitlogs="git log --format='%C(auto) %h|%s|%ci'"
+    echo "alias gitlogs=\"git log --format='%C(auto) %h|%s|%ci'\"" >> ~/.bashrc
 #execute the application
 ENTRYPOINT ["java","-cp","app:app/lib/*","com/example/versionningservice/VersionningServiceApplication"]

@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -23,6 +24,17 @@ public class CommandExecutorService {
             System.out.println("J'execute : " + command);
             Process process;
             process = Runtime.getRuntime().exec( command );
+            process.waitFor();
+            return getProcessResult(process);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public ProcessResponse execute(String command,String path) throws IOException {
+        try{
+            System.out.println("J'execute : " + command);
+            Process process;
+            process = Runtime.getRuntime().exec( command,null, new File(path));
             process.waitFor();
             return getProcessResult(process);
         } catch (InterruptedException e) {
