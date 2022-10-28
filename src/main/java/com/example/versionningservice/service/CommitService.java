@@ -62,6 +62,7 @@ public class CommitService {
     private List<Commit> parseObjectCommitFile(String filePath) throws FileNotFoundException {
         Gson gson = new Gson();
         JsonReader reader = new JsonReader(new FileReader(filePath));
+        reader.setLenient(true);
         List<Commit> commitList = gson.fromJson(reader, REVIEW_TYPE);
         System.out.println("commitList: " + commitList);
         return commitList;
