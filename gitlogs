@@ -1,5 +1,5 @@
 #! /bin/bash
 
 echo "[" >$2
-git -C $1 log --format='{"hash":"%H","message":"%s","date":"%ci"},' >>$2
+git -C $1 log --format='{"code":"%H","name":"%s","date":"%ci"},' >>$2
 echo "]" >>$2
