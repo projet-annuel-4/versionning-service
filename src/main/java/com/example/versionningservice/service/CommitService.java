@@ -54,14 +54,14 @@ public class CommitService {
          commandExecutorService.execute(
                  String.format(GitCommand.LIST_COMMIT, projectPath ,uuid)
         );
-         var filePath = Path.of(String.format("/tmp/%s.json", uuid));
+         var path = String.format("/tmp/%s.json", uuid);
         System.out.println("uuid: " + uuid);
-        return parseObjectCommitFile(filePath);
+        return parseObjectCommitFile(path);
     }
 
-    private List<Commit> parseObjectCommitFile(Path filePath) throws FileNotFoundException {
+    private List<Commit> parseObjectCommitFile(String filePath) throws FileNotFoundException {
         Gson gson = new Gson();
-        JsonReader reader = new JsonReader(new FileReader(filePath.toFile()));
+        JsonReader reader = new JsonReader(new FileReader(filePath));
         List<Commit> commitList = gson.fromJson(reader, REVIEW_TYPE);
         System.out.println("commitList: " + commitList);
         return commitList;
