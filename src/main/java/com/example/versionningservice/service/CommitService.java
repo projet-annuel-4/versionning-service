@@ -16,12 +16,10 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.nio.file.Path;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class CommitService {
@@ -65,7 +63,7 @@ public class CommitService {
         reader.setLenient(true);
         List<Commit> commitList = gson.fromJson(reader, REVIEW_TYPE);
         System.out.println("commitList: " + commitList);
-        return commitList;
+        return commitList.stream().filter(commit -> commit != null && !commit.getCode().isEmpty()).collect(Collectors.toList());
     }
 
     public List<Conflict> revertCommit(RevertCommitRequest request, Long projectId) throws IOException {
