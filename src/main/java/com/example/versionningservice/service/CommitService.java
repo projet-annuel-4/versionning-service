@@ -72,11 +72,9 @@ public class CommitService {
                 String.format(GitCommand.REVERT_COMMIT, projectPath, request.getCommitToRevert())
         );
         System.out.println("exit code revert commit : " + processResponse.exitCode);
-        // if exit code = 1 || 128 => conflict
         List<Conflict> conflicts = new ArrayList<>();
-        // todo if no changes revert abort => change return of commit function / if no changes it will return 1
         if ( processResponse.exitCode == 0 ){
-            commit("Revert commit " + request.commitToRevert, projectId);
+            commit("Revert_commit_" + request.commitToRevert, projectId);
             return conflicts;
         }
         processResponse = commandExecutorService.execute(
