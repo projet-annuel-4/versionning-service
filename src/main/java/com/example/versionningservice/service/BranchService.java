@@ -4,7 +4,6 @@ import com.example.versionningservice.domain.model.Conflict;
 import com.example.versionningservice.domain.model.ProcessResponse;
 import com.example.versionningservice.dto.request.CheckoutBranchRequest;
 import com.example.versionningservice.dto.request.CreateBranchRequest;
-import com.example.versionningservice.dto.request.DeleteBranchRequest;
 import com.example.versionningservice.dto.request.MergeBranchRequest;
 import com.example.versionningservice.utils.GitCommand;
 import org.springframework.beans.factory.annotation.Value;
@@ -108,10 +107,10 @@ public class BranchService {
         System.out.println("exit code merge abort  : " + processResponse.exitCode);
     }
 
-    public void deleteBranch(DeleteBranchRequest branchToDelete, Long projectId) throws IOException {
+    public void deleteBranch(String branchToDelete, Long projectId) throws IOException {
         String projectPath = activeDir + "/" + projectId;
         ProcessResponse processResponse = commandExecutorService.execute(
-                String.format(GitCommand.DELETE_BRANCH, projectPath, branchToDelete.getBranchToDelete())
+                String.format(GitCommand.DELETE_BRANCH, projectPath, branchToDelete)
         );
     }
 }

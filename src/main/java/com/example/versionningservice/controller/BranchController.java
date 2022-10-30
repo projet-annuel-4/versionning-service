@@ -4,7 +4,6 @@ package com.example.versionningservice.controller;
 import com.example.versionningservice.domain.model.Conflict;
 import com.example.versionningservice.dto.request.CheckoutBranchRequest;
 import com.example.versionningservice.dto.request.CreateBranchRequest;
-import com.example.versionningservice.dto.request.DeleteBranchRequest;
 import com.example.versionningservice.dto.request.MergeBranchRequest;
 import com.example.versionningservice.dto.response.BranchResponse;
 import com.example.versionningservice.service.BranchService;
@@ -65,8 +64,8 @@ public class BranchController {
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<?> deleteBranch(@RequestBody DeleteBranchRequest branchToDelete, @PathVariable("projectId") Long projectId) throws IOException {
-        this.branchService.deleteBranch(branchToDelete, projectId);
+    public ResponseEntity<?> deleteBranch(@RequestParam String branchName, @PathVariable("projectId") Long projectId) throws IOException {
+        this.branchService.deleteBranch(branchName, projectId);
         return ResponseEntity.ok().build();
     }
 
