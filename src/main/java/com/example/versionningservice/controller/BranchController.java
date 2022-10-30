@@ -37,9 +37,8 @@ public class BranchController {
     }
 
     @PostMapping("/checkout")
-    public ResponseEntity<?> checkoutBranch(@RequestBody CheckoutBranchRequest branchName, @PathVariable("projectId") Long projectId) throws IOException {
-        this.branchService.checkoutBranch(branchName, projectId);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<List<String>> checkoutBranch(@RequestBody CheckoutBranchRequest branchName, @PathVariable("projectId") Long projectId) throws IOException {
+        return ResponseEntity.ok(this.branchService.checkoutBranch(branchName, projectId));
     }
 
     @GetMapping("/getAllBranches")

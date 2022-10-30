@@ -58,11 +58,12 @@ public class BranchService {
         return processResponse.outputs;
     }
 
-    public void checkoutBranch(CheckoutBranchRequest branchName, Long projectId) throws IOException {
+    public List<String> checkoutBranch(CheckoutBranchRequest branchName, Long projectId) throws IOException {
         String projectPath = activeDir + "/" + projectId;
         ProcessResponse processResponse = commandExecutorService.execute(
                 String.format(GitCommand.CHECKOUT, projectPath, branchName.getTargetBranch())
         );
+        return processResponse.errors;
     }
 
     public List<Conflict> mergeBranch(MergeBranchRequest request, Long projectId) throws IOException {
